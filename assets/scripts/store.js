@@ -3,4 +3,8 @@
 const store = {
 }
 
-module.exports = store
+const tuneHash = {}
+module.exports = {
+store,
+tuneHash
+}
