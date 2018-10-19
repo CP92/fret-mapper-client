@@ -1,5 +1,9 @@
 @import '~bootstrap/scss/bootstrap';
 
+.hidden {
+  display: none;
+}
+
 .box {
   border-left-style: solid;
   border-right-style: solid;
