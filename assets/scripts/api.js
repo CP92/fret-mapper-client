@@ -45,9 +45,21 @@ const sendLogOut = function () {
   })
 }
 
+const sendNewTuning = function (data) {
+  return $.ajax({
+    url: config.apiUrl + '/tunings',
+    headers: {
+      Authorization: `Token token=${store.token}`
+    },
+    method: 'POST',
+    data
+  })
+}
+
 module.exports = {
   sendLogOut,
   sendPassChange,
   sendLoginCreds,
-  sendSignUpCreds
+  sendSignUpCreds,
+  sendNewTuning
 }

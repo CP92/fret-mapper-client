@@ -4,12 +4,13 @@ const api = require('./api')
 const ui = require('./ui')
 const getFormFields = require('../../lib/get-form-fields')
 const notesToolBox = require('./notes.js')
+const store = require('./store')
 
 const onTunerChange = function (event) {
   event.preventDefault()
   const note = [$(event.target).val()]
   const tuner = ['#' + $(event.target).closest('select').attr('id')]
-  //console.log(tuner)
+  // console.log(tuner)
   const frets = []
   $(event.target).parent().siblings().each(function () { frets.push(this.id) })
   let newStringTuning = notesToolBox.noteLayout(note, tuner)
@@ -51,7 +52,7 @@ const onLoginCreds = function (event) {
 const onPasswordChange = function (event) {
   event.preventDefault()
   const passData = getFormFields(event.target)
-
+  //console.log(passData)
   api.sendPassChange(passData)
     .then(ui.passChangeSuccess)
     .catch(ui.wrongPassChange)
@@ -65,11 +66,37 @@ const onLogOut = function (event) {
     .catch(ui.error)
 }
 
+const saveTuning = function (event) {
+  if (store.token) {
+    const title = $('#tuning-title').val()
+    store.tuneHash['title'] = title
+    //console.log(store.tuneHash)
+    console.log(store.token)
+    const data = {
+      'tuning': {'title': store.tuneHash['title']}
+    }
+    for (const [key, value] of Object.entries(store.tuneHash)) {
+      if (key === 'title') {
+        //console.log('skipped')
+      } else {
+        data.tuning[key] = value
+      }
+    }
+    //console.log(data)
+    api.sendNewTuning(data)
+      .then()
+      .catch()
+  } else {
+    ui.inputNotAllowed()
+  }
+}
+
 module.exports = {
   onTunerChange,
   onLoad,
   onLogOut,
   onPasswordChange,
   onLoginCreds,
-  onSignUpCreds
+  onSignUpCreds,
+  saveTuning
 }

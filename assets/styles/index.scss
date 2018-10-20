@@ -10,6 +10,21 @@
   border-width: medium;
   height: 50px;
   width: 50px;
+
+}
+
+.buttons-and-fields {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-box-align: stretch;
+  -ms-flex-align: stretch;
+  align-items: stretch;
+  width: 50%;
+  margin: 0 auto;
 }
 
 #row-0 {
@@ -27,8 +42,23 @@
 }
 
 .text-center {
-   text-align: center;
-   align-items: center;
-   display: flex;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
+
+}
+
+.input-group {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+    width: 50%;
+    margin: 0 auto;
 }

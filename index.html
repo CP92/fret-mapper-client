@@ -13,10 +13,46 @@
     </head>
     <body>
       <h1>Fret Mapper</h1>
-
+      <div class="buttons-and-fields">
+        <button id="sign-out" class="hidden btn-lg btn-danger">Sign out</button>
+        <div id="logout-message" class="hidden log-out-group"></div>
+      <button id="change-password" class="hidden btn-lg btn-info">Change password</button>
+      <form id="change-password-form" class="hidden sign-up-group">
+      <legend>Please enter your information to sign up!</legend>
+      <input required name="passwords[old]" type="password" placeholder="Current password"/>
+      <input required name="passwords[new]" type="password" placeholder="New Password"/>
+      <input type="submit" value="Submit" class="btn btn-default"/>
+    </form>
+      <button id='sign-in-button' type="button" class="btn-lg btn-success">LOG IN</button>
+      <div id="sign-in-message" class="sign-in-group hidden"></div>
+      <form id="sign-in-form" class="hidden sign-in-group">
+        <legend>Please enter your login details</legend>
+        <input id="sign-in-email" required name="credentials[email]" type="email" placeholder="Email"/>
+        <input id="sign-in-password" required name="credentials[password]" type="password" placeholder="Password"/>
+        <input type="submit" value="Submit" class="btn btn-default"/>
+      </form>
+      <button id='sign-up-button' type="button" class="btn-lg btn-warning">SIGN UP</button>
+      <div id="sign-up-message" class="sign-up-group"></div>
+      <form id="sign-up-form" class="hidden sign-up-group">
+      <legend>Please enter your information to sign up!</legend>
+      <input id="sign-up-email" required name="credentials[email]" type="email" placeholder="Email"/>
+      <input id="sign-up-password" required name="credentials[password]" type="password" placeholder="Password"/>
+      <input id="sign-up-passwordconfirm" required name="credentials[password_confirmation]" type="password" placeholder="Retype password"/>
+      <input type="submit" value="Submit" class="btn btn-default"/>
+    </form>
+  </div>
+    <div id="state-message" class="hidden state"></div>
+    <div class="input-group mb-3">
+  <input id="tuning-title" type="text" class="form-control" placeholder="Tuning title" aria-label="Tuning title" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    <button id="save" class="btn btn-outline-primary" type="button">Save!</button>
+  </div>
+</div>
+    </div>
+      </div>
       <div class="container">
         <div class="row" id="row-0">
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-0"  id="tuner">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-0 text-center"  id="tuner">
             <select class="tuner" id="tuner-0">
               <option value="A">A</option>
               <option value="A#">A#</option>
@@ -45,7 +81,7 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-11">0-11</div>
         </div>
         <div class="row" id="row-1">
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-1"  id="tuner">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-1 text-center"  id="tuner">
             <select class="tuner" id="tuner-1">
               <option value="A">A</option>
               <option value="A#">A#</option>
@@ -74,7 +110,7 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-11">1-11</div>
         </div>
         <div class="row" id="row-2">
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-2"  id="tuner">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-2 text-center"  id="tuner">
             <select class="tuner" id="tuner-2">
               <option value="A">A</option>
               <option value="A#">A#</option>
@@ -103,7 +139,7 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-11">2-11</div>
         </div>
         <div class="row" id="row-3">
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-3" id="tuner">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-3 text-center" id="tuner">
             <select class="tuner" id="tuner-3">
               <option value="A">A</option>
               <option value="A#">A#</option>
@@ -132,7 +168,7 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-11">3-11</div>
         </div>
         <div class="row" id="row-4">
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-4" id="tuner">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-4 text-center" id="tuner">
             <select class="tuner" id="tuner-4">
               <option value="A" selected="selected">A</option>
               <option value="A#">A#</option>
@@ -161,7 +197,7 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-11">4-11</div>
         </div>
         <div class="row" id="row-5">
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-5" id="tuner">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-5 text-center" id="tuner">
             <select class="tuner" id="tuner-5">
               <option value="A">A</option>
               <option value="A#">A#</option>

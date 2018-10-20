@@ -11,11 +11,11 @@ const noteLayout = function (notes, tuners) {
 
     if (outNotes.indexOf(note) === 0) {
       //console.log(outNotes)
-      const colKey = outNotes.shift()
+      //const colKey = outNotes.shift()
       const curCol = outNotes
 
       containsTuner(tuners[index])
-      store.tuneHash[tuners[index] + '-' + colKey] = curCol
+      store.tuneHash[`string${index}`] = curCol
       collection.push(outNotes)
     } else {
       const last = outNotes.slice(0, outNotes.indexOf(note) + 1)
@@ -25,16 +25,16 @@ const noteLayout = function (notes, tuners) {
       last.forEach(function (x) {
         outNotes.push(x)
       })
-      const colKey = outNotes.pop()
+      //const colKey = outNotes.pop()
       //console.log(colKey)
       const curCol = outNotes
       collection.push(outNotes)
       //console.log(curCol)
       containsTuner(tuners[index])
-      store.tuneHash[tuners[index] + '-' + colKey] = curCol
+      store.tuneHash[`string${index}`] = curCol
     }
   })
-  console.log(store.tuneHash)
+  //console.log(store.tuneHash)
   return collection
 }
 
