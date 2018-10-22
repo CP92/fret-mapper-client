@@ -2,7 +2,6 @@
 
 const config = require('./config')
 const store = require('./store')
-//const ui = require('./ui')
 
 const sendSignUpCreds = function (data) {
   // console.log(data)
@@ -45,7 +44,6 @@ const sendLogOut = function () {
 }
 
 const sendGetUserTunings = function (data) {
-  //console.log(store.token)
   return $.ajax({
     url: config.apiUrl + '/tunings',
     headers: {

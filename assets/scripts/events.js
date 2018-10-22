@@ -10,8 +10,6 @@ const onTunerChange = function (event) {
   event.preventDefault()
   const note = [$(event.target).val()]
   const tuner = ['#' + $(event.target).closest('select').attr('id')]
-  //console.log(tuner)
-  // console.log(tuner)
   const frets = []
   $(event.target).parent().siblings().each(function () { frets.push(this.id) })
   let newStringTuning = notesToolBox.oneNoteLayout(note, tuner)
@@ -106,7 +104,7 @@ const onSaveTuning = function (event) {
         api.sendUpdateExistingTuning(data)
           .then(api.sendGetUserTunings)
             .then(ui.fillTuningsDropDown)
-    } else {
+         {
     api.sendNewTuning(data)
       .then(api.sendGetUserTunings)
         .then(ui.fillTuningsDropDown)

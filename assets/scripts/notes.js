@@ -13,10 +13,10 @@ const noteLayout = function (notes, tuners) {
     if (outNotes.indexOf(note) === 0) {
       // console.log(outNotes)
       outNotes.shift()
-      //const curCol = outNotes
+      // const curCol = outNotes
 
       containsTuner(tuners[index])
-      //store.tuneHash[`string${index}`] = curCol
+      // store.tuneHash[`string${index}`] = curCol
       collection.push(outNotes)
     } else {
       const last = outNotes.slice(0, outNotes.indexOf(note) + 1)

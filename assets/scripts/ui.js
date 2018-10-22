@@ -4,7 +4,6 @@ const store = require('./store.js')
 const notesToolBox = require('./notes')
 
 const changeStringNotes = function (notes, frets) {
-  //console.log(notes, frets)
   frets.forEach(function (fret, index) {
     $(`#${fret}`).text(notes[index])
     // console.log(notes[index] + ` added to #${fret}`)
