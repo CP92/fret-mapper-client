@@ -1,12 +1,13 @@
 'use strict'
 
 const store = require('./store.js')
+const notesToolBox = require('./notes')
 
 const changeStringNotes = function (notes, frets) {
-  console.log(notes, frets)
+  //console.log(notes, frets)
   frets.forEach(function (fret, index) {
     $(`#${fret}`).text(notes[index])
-    //console.log(notes[index] + ` added to #${fret}`)
+    // console.log(notes[index] + ` added to #${fret}`)
   })
 }
 
@@ -17,15 +18,14 @@ const changeOnLoad = function (noteGroups, frets) {
 }
 
 const signUpError = function () {
-  //console.log(error)
+  // console.log(error)
   $('#sign-up-message').html("<h4>The email you have entered already exists, or your passwords don't match. Please try again</h4>")
   setTimeout(function () { $('#sign-up-message').fadeOut('slow') }, 500)
   $('#sign-up-form').trigger('reset')
-
 }
 // Generic error when something unforseen breaks
 const error = function (response) {
-  //console.log(response)
+  // console.log(response)
   $('#state-message').fadeIn().html('<h4>Something broke!</h4>')
   setTimeout(function () { $('#sign-in-message').fadeOut('slow') }, 500)
 }
@@ -41,10 +41,11 @@ const signUpSuccess = function () {
 const loginSuccess = function (response) {
   $('#sign-in-message').fadeIn().html('<h4>Login successful!</h4>')
   setTimeout(function () { $('#sign-in-message').fadeOut('slow') }, 500)
-  //console.log(response)
-  const user = response.user
-  store.token = user.token
-  console.log(store.token)
+  // console.log(response)
+  // console.log(response.user.token)
+  const token = response.user.token
+  store.token = token
+  // console.log(store.token)
   $('#sign-out').removeClass('hidden')
   $('#change-password').removeClass('hidden')
   $('#sign-in-form').addClass('hidden')
@@ -115,11 +116,58 @@ const logOutSuccess = function (response) {
   $('#state-message').html('')
   $('#sign-in-message').html('')
   store.token = null
+  store.tunings = null
 }
 
 const inputNotAllowed = function () {
   $('#state-message').fadeIn().html('<h4>Please log in to do that!</h4>')
   setTimeout(function () { $('#state-message').fadeOut('slow') }, 500)
+}
+
+const fillTuningsDropDown = function (response) {
+  store.tunings = response.tunings
+  console.log(store.tunings)
+  $('#tuning-selector').html('<option value="" disabled selected>Select tuning</option>')
+  store.tunings.forEach(function (tuning) {
+    $('#tuning-selector').append(`<option class="dropdown-item drop-tuning" href="#">${tuning.title}</option>`)
+  })
+}
+
+const loadCurrentTuning = function () {
+  console.log(store.currentTuning)
+  const firstNotes = []
+  let notes = []
+  const frets = []
+  $('#tuning-title').val(store.currentTuning.title)
+  for (const [key, value] of Object.entries(store.currentTuning)) {
+    if (key.includes('string')) {
+      console.log(key)
+      firstNotes.push(value[0])
+      notes.push(value)
+    }
+  }
+
+  $('.fret').each(function () {
+    frets.push(this.id)
+    // console.log(stringNum)
+  })
+  console.log(firstNotes)
+  // const afterTunerNotes = []
+  /*  notes.forEach(function (noteArray) {
+    afterTunerNotes.push(noteArray[0])
+    console.log('added' + noteArray)
+  }) */
+  // console.log(afterTunerNotes)
+  const tunerNotes = notesToolBox.getTunerNote(firstNotes)
+  // console.log(tunerNotes)
+  $('.tuner').each(function (tuner) {
+    // console.log(tunerNotes[this.id.slice(6)])
+    $('#' + this.id).val(tunerNotes[this.id.slice(6)]).trigger('change')
+    // console.log($('#' + this.id).val())
+  })
+  notes = [].concat.apply([], notes)
+  console.log(tunerNotes)
+  changeStringNotes(notes, frets)
 }
 
 module.exports = {
@@ -135,5 +183,7 @@ module.exports = {
   loginError,
   passChangeSuccess,
   onPasswordChangeShow,
-  inputNotAllowed
+  inputNotAllowed,
+  fillTuningsDropDown,
+  loadCurrentTuning
 }

@@ -2,9 +2,10 @@
 
 const config = require('./config')
 const store = require('./store')
+//const ui = require('./ui')
 
 const sendSignUpCreds = function (data) {
-  //console.log(data)
+  // console.log(data)
   return $.ajax({
     url: config.apiUrl + '/sign-up',
     method: 'POST',
@@ -13,7 +14,7 @@ const sendSignUpCreds = function (data) {
 }
 
 const sendLoginCreds = function (data) {
-  //console.log(data)
+  // console.log(data)
   return $.ajax({
     url: config.apiUrl + '/sign-in',
     method: 'POST',
@@ -32,16 +33,25 @@ const sendPassChange = function (data) {
   })
 }
 
-
-
 const sendLogOut = function () {
-  //console.log(store)
+  // console.log(store)
   return $.ajax({
     url: config.apiUrl + '/sign-out',
     headers: {
       Authorization: `Token token=${store.token}`
     },
     method: 'DELETE'
+  })
+}
+
+const sendGetUserTunings = function (data) {
+  //console.log(store.token)
+  return $.ajax({
+    url: config.apiUrl + '/tunings',
+    headers: {
+      Authorization: `Token token=${store.token}`
+    },
+    method: 'GET'
   })
 }
 
@@ -56,10 +66,23 @@ const sendNewTuning = function (data) {
   })
 }
 
+const sendUpdateExistingTuning = function (data) {
+  return $.ajax({
+    url: config.apiUrl + `/tunings/${store.currentTuning.id}`,
+    headers: {
+      Authorization: `Token token=${store.token}`
+    },
+    method: 'PATCH',
+    data
+  })
+}
+
 module.exports = {
   sendLogOut,
   sendPassChange,
   sendLoginCreds,
   sendSignUpCreds,
-  sendNewTuning
+  sendNewTuning,
+  sendGetUserTunings,
+  sendUpdateExistingTuning
 }

@@ -2,6 +2,7 @@
 
 const events = require('./events')
 const ui = require('./ui')
+
 // use require with a reference to bundle the file and use it in this file
 // const example = require('./example')
 
@@ -18,5 +19,6 @@ $(() => {
   $('#change-password-form').on('submit', events.onPasswordChange)
   $('#sign-in-button').on('click', ui.showLoginForm)
   $('#sign-up-button').on('click', ui.showSignUpForm)
-  $('#save').on('click', events.saveTuning)
+  $('#save').on('click', events.onSaveTuning)
+  $('#tuning-selector').on('change', events.onGetUserTuning)
 })
