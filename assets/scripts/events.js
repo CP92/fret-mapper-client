@@ -25,9 +25,9 @@ const onLoad = function (event) {
   $('.tuner').each(function () { tuners.push('#' + this.id) })
   $('.tuner').each(function () { tunerNotes.push($('#' + this.id).val()) })
   $('.fret').each(function () { frets.push(this.id) })
-//  console.log(tuners)
+  // console.log(tuners)
   tunerNotes = notesToolBox.noteLayout(tunerNotes, tuners)
-//  console.log(tunerNotes)
+  // console.log(tunerNotes)
   tunerNotes = [].concat.apply([], tunerNotes)
   ui.changeStringNotes(tunerNotes, frets)
   store.currentTuning = {}
@@ -84,13 +84,13 @@ const onSaveTuning = function (event) {
     const title = $('#tuning-title').val()
     store.tuneHash['title'] = title
     // console.log(store.tuneHash)
-    //console.log(store.token)
+    // console.log(store.token)
     const data = {
       'tuning': {'title': store.tuneHash['title']}
     }
 
-    //notesToolBox.setCurrentTuning()
-    //console.log(store.tuneHash)
+    // notesToolBox.setCurrentTuning()
+    // console.log(store.tuneHash)
     for (const [key, value] of Object.entries(store.tuneHash)) {
       if (key === 'title') {
         // console.log('skipped')
@@ -98,17 +98,17 @@ const onSaveTuning = function (event) {
         data.tuning[key] = value
       }
     }
-    //console.log(data)
+    // console.log(data)
     // console.log(data)
     if (store.currentTuning.id !== null) {
-        api.sendUpdateExistingTuning(data)
-          .then(api.sendGetUserTunings)
-            .then(ui.fillTuningsDropDown)
-    } else {
-    api.sendNewTuning(data)
-      .then(api.sendGetUserTunings)
+      api.sendUpdateExistingTuning(data)
+        .then(api.sendGetUserTunings)
         .then(ui.fillTuningsDropDown)
-      .catch()
+    } else {
+      api.sendNewTuning(data)
+        .then(api.sendGetUserTunings)
+        .then(ui.fillTuningsDropDown)
+        .catch()
     }
   } else {
     ui.inputNotAllowed()
@@ -117,11 +117,11 @@ const onSaveTuning = function (event) {
 
 const onGetUserTuning = function (event) {
   event.preventDefault()
-  //console.log($(event.target).val())
+  // console.log($(event.target).val())
   const tuningName = $(event.target).val()
-  //console.log(tuningName)
+  // console.log(tuningName)
   store.currentTuning = notesToolBox.searchSavedTunings(tuningName)
-  //console.log(store.currentTuning)
+  // console.log(store.currentTuning)
   ui.loadCurrentTuning()
 }
 
