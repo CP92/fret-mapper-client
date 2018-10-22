@@ -104,7 +104,7 @@ const onSaveTuning = function (event) {
         api.sendUpdateExistingTuning(data)
           .then(api.sendGetUserTunings)
             .then(ui.fillTuningsDropDown)
-         {
+    } else {
     api.sendNewTuning(data)
       .then(api.sendGetUserTunings)
         .then(ui.fillTuningsDropDown)
