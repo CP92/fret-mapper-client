@@ -75,6 +75,16 @@ const sendUpdateExistingTuning = function (data) {
   })
 }
 
+const sendDeleteExistingTuning = function () {
+  return $.ajax({
+    url: config.apiUrl + `/tunings/${store.currentTuning.id}`,
+    headers: {
+      Authorization: `Token token=${store.token}`
+    },
+    method: 'DELETE'
+  })
+}
+
 module.exports = {
   sendLogOut,
   sendPassChange,
@@ -82,5 +92,6 @@ module.exports = {
   sendSignUpCreds,
   sendNewTuning,
   sendGetUserTunings,
-  sendUpdateExistingTuning
+  sendUpdateExistingTuning,
+  sendDeleteExistingTuning
 }

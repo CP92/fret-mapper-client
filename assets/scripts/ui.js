@@ -52,6 +52,7 @@ const loginSuccess = function (response) {
   $('#sign-in-button').addClass('hidden')
   $('#sign-up-button').addClass('hidden')
   $('#sign-in-form').trigger('reset')
+  $('#tuning-selector-div').removeClass('hidden')
 }
 
 const onPasswordChangeShow = function () {
@@ -101,7 +102,7 @@ const showSignUpForm = function () {
 //  Shows the player they are logged out
 const logOutSuccess = function (response) {
   // store.token = null
-  console.log(store)
+  //console.log(store)
   $('#logout-message').fadeIn().html('<h4>Logout successful!</h4>')
   setTimeout(function () { $('#logout-message').fadeOut('slow') }, 500)
   $('#sign-out').addClass('hidden')
@@ -114,8 +115,11 @@ const logOutSuccess = function (response) {
   $('#sign-up-form').trigger('reset')
   $('#state-message').html('')
   $('#sign-in-message').html('')
+  $('#tuning-selector-div').addClass('hidden')
   store.token = null
-  store.tunings = null
+  store.tunings = {}
+  store.currentTuning = {}
+  store.tuneHash = {}
 }
 
 const inputNotAllowed = function () {
@@ -126,10 +130,17 @@ const inputNotAllowed = function () {
 const fillTuningsDropDown = function (response) {
   store.tunings = response.tunings
   console.log(store.tunings)
-  $('#tuning-selector').html('<option value="" disabled selected>Select tuning</option>')
-  store.tunings.forEach(function (tuning) {
-    $('#tuning-selector').append(`<option class="dropdown-item drop-tuning" href="#">${tuning.title}</option>`)
-  })
+  if (jQuery.isEmptyObject(store.tunings)) {
+    $('#tuning-selector').text('Select Tuning')
+  } else {
+    $('#tuning-selector').text('Select Tuning')
+    $('.dropdown-menu').html('')
+    store.tunings.forEach(function (tuning) {
+      console.log('adding' + tuning.title)
+      $('.dropdown-menu').append(`<button class="dropdown-item drop-tuning" type="button">${tuning.title}</button>`)
+    })
+  }
+  store.currentTuning = null
 }
 
 const loadCurrentTuning = function () {
@@ -140,7 +151,7 @@ const loadCurrentTuning = function () {
   $('#tuning-title').val(store.currentTuning.title)
   for (const [key, value] of Object.entries(store.currentTuning)) {
     if (key.includes('string')) {
-      console.log(key)
+      //console.log(key)
       firstNotes.push(value[0])
       notes.push(value)
     }
@@ -150,7 +161,7 @@ const loadCurrentTuning = function () {
     frets.push(this.id)
     // console.log(stringNum)
   })
-  console.log(firstNotes)
+  //console.log(firstNotes)
   // const afterTunerNotes = []
   /*  notes.forEach(function (noteArray) {
     afterTunerNotes.push(noteArray[0])
@@ -165,7 +176,7 @@ const loadCurrentTuning = function () {
     // console.log($('#' + this.id).val())
   })
   notes = [].concat.apply([], notes)
-  console.log(tunerNotes)
+  //console.log(tunerNotes)
   changeStringNotes(notes, frets)
 }
 

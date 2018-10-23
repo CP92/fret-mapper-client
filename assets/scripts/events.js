@@ -74,7 +74,32 @@ const onLogOut = function (event) {
 const onDeleteTuning = function () {
   event.preventDefault()
   if (store.token) {
+    const title = $('#tuning-title').val()
+    store.tuneHash['title'] = title
+    // console.log(store.tuneHash)
+    // console.log(store.token)
+    const data = {
+      'tuning': {'title': store.tuneHash['title']}
+    }
 
+    // notesToolBox.setCurrentTuning()
+    // console.log(store.tuneHash)
+    for (const [key, value] of Object.entries(store.tuneHash)) {
+      if (key === 'title') {
+        // console.log('skipped')
+      } else {
+        data.tuning[key] = value
+      }
+    }
+    // console.log(data)
+    //console.log(data)
+    store.currentTuning = notesToolBox.searchSavedTunings(data.tuning.title)
+    //console.log(store.currentTuning)
+    api.sendDeleteExistingTuning()
+      .then(api.sendGetUserTunings)
+      .then(ui.fillTuningsDropDown)
+  } else {
+    ui.inputNotAllowed()
   }
 }
 
@@ -99,8 +124,10 @@ const onSaveTuning = function (event) {
       }
     }
     // console.log(data)
-    // console.log(data)
-    if (store.currentTuning.id !== null) {
+    //console.log(data)
+    store.currentTuning = notesToolBox.searchSavedTunings(data.tuning.title)
+    console.log(store.currentTuning)
+    if ((!jQuery.isEmptyObject(store.currentTuning))) {
       api.sendUpdateExistingTuning(data)
         .then(api.sendGetUserTunings)
         .then(ui.fillTuningsDropDown)
@@ -117,9 +144,11 @@ const onSaveTuning = function (event) {
 
 const onGetUserTuning = function (event) {
   event.preventDefault()
+  //console.log("clicked")
   // console.log($(event.target).val())
-  const tuningName = $(event.target).val()
-  // console.log(tuningName)
+  const tuningName = $(event.target).text()
+  //console.log(tuningName)
+  $('#tuning-selector').text(tuningName)
   store.currentTuning = notesToolBox.searchSavedTunings(tuningName)
   // console.log(store.currentTuning)
   ui.loadCurrentTuning()

@@ -111,13 +111,21 @@ const setCurrentTuning = function () {
 }
 
 const searchSavedTunings = function (tuningName) {
-  const tuning = store.tunings.find(function (tuning) {
-    if (tuning.title === tuningName) {
-      // console.log(tuning)
-      return tuning
-    }
-  })
-  // console.log(tuning)
+  console.log(store.tunings)
+  console.log(tuningName)
+  let tuning = {}
+  console.log(tuning)
+  if (typeof store.tunings === 'undefined') {
+    return tuning
+  } else {
+    tuning = store.tunings.find(function (objTuning) {
+      return objTuning.title === tuningName
+    })
+  }
+  if (typeof tuning === 'undefined') {
+    tuning = {}
+  }
+  console.log(tuning)
   return tuning
 }
 
