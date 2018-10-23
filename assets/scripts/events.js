@@ -9,10 +9,20 @@ const store = require('./store')
 // Changes the single line when a tuner is changed
 const onTunerChange = function (event) {
   event.preventDefault()
-  const note = [$(event.target).val()]
-  const tuner = ['#' + $(event.target).closest('select').attr('id')]
+  //console.log(event)
+  let curId = $(event.target).parent().siblings()[0]
+  curId = $(curId).attr('id')
+  //console.log(curId)
+  const note = [$(event.target).text()]
+  //console.log(note[0])
+  $(`#${curId}`).text(note[0])
+  //note = note.replace(/\W/g, '')
+  //console.log($(`#${curId}`).text())
+  const tuner = ['#' + curId]
   const frets = []
-  $(event.target).parent().siblings().each(function () { frets.push(this.id) })
+  $(event.target).parent().parent().siblings().each(function () { frets.push(this.id) })
+  //console.log(note)
+  //console.log(tuner)
   let newStringTuning = notesToolBox.oneNoteLayout(note, tuner)
   newStringTuning = [].concat.apply([], newStringTuning)
   ui.changeStringNotes(newStringTuning, frets)
@@ -25,8 +35,10 @@ const onLoad = function (event) {
   const tuners = []
   let tunerNotes = []
   $('.tuner').each(function () { tuners.push('#' + this.id) })
-  $('.tuner').each(function () { tunerNotes.push($('#' + this.id).val()) })
+  $('.tuner').each(function () { tunerNotes.push($('#' + this.id).text().replace(/\W/g, '')) })
   $('.fret').each(function () { frets.push(this.id) })
+  //console.log(tunerNotes)
+  //tunerNotes = tunerNotes.replace(/\W/g, '')
   tunerNotes = notesToolBox.noteLayout(tunerNotes, tuners)
   tunerNotes = [].concat.apply([], tunerNotes)
   ui.changeStringNotes(tunerNotes, frets)
@@ -69,9 +81,11 @@ const onLogOut = function (event) {
 // allows the user to delete a existing tuning
 const onDeleteTuning = function (event) {
   event.preventDefault()
-  if (store.token) {
-    const title = $('#tuning-title').val()
-
+  let title = $('#tuning-title').val()
+  title = title.replace(/[^\w\s]/gi, '')
+  store.currentTuning = notesToolBox.searchSavedTunings(title)
+  //console.log(title)
+  if (store.token && title !== '') {
     store.tuneHash['title'] = title
     const data = {
       'tuning': {'title': store.tuneHash['title']}
@@ -82,19 +96,22 @@ const onDeleteTuning = function (event) {
         data.tuning[key] = value
       }
     }
-    store.currentTuning = notesToolBox.searchSavedTunings(data.tuning.title)
     api.sendDeleteExistingTuning()
       .then(api.sendGetUserTunings)
       .then(ui.fillTuningsDropDown)
-  } else {
-    ui.inputNotAllowed()
-  }
+    } else if (!store.token) {
+      ui.inputNotAllowed()
+    } else if (title === '') {
+    ui.deleteNotAllowedNoInput()
+}
 }
 
 const onSaveTuning = function (event) {
   event.preventDefault()
-  if (store.token) {
-    const title = $('#tuning-title').val()
+  let title = $('#tuning-title').val()
+  title = title.replace(/[^\w\s]/gi, '')
+  store.currentTuning = notesToolBox.searchSavedTunings(title)
+  if (store.token && title !== '') {
     store.tuneHash['title'] = title
     const data = {
       'tuning': {'title': store.tuneHash['title']}
@@ -105,7 +122,6 @@ const onSaveTuning = function (event) {
         data.tuning[key] = value
       }
     }
-    store.currentTuning = notesToolBox.searchSavedTunings(data.tuning.title)
     if ((!jQuery.isEmptyObject(store.currentTuning))) {
       api.sendUpdateExistingTuning(data)
         .then(api.sendGetUserTunings)
@@ -116,16 +132,20 @@ const onSaveTuning = function (event) {
         .then(ui.fillTuningsDropDown)
         .catch()
     }
-  } else {
+  } else if (!store.token) {
     ui.inputNotAllowed()
-  }
+  } else if (title === '') {
+  ui.saveNotAllowedNoInput()
+}
 }
 
 const onGetUserTuning = function (event) {
   event.preventDefault()
   const tuningName = $(event.target).text()
   $('#tuning-selector').text(tuningName)
+  //console.log(tuningName)
   store.currentTuning = notesToolBox.searchSavedTunings(tuningName)
+  //console.log(store.currentTuning)
   ui.loadCurrentTuning()
 }
 

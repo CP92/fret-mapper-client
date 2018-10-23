@@ -122,13 +122,15 @@ const inputNotAllowed = function () {
 
 const fillTuningsDropDown = function (response) {
   store.tunings = response.tunings
-  if (jQuery.isEmptyObject(store.tunings)) {
+  //console.log(store.tunings)
+  if (store.tunings.length === 0) {
     $('#tuning-selector').text('Select Tuning')
+    $('.selector').html('')
   } else {
     $('#tuning-selector').text('Select Tuning')
-    $('.dropdown-menu').html('')
+    $('.selector').html('')
     store.tunings.forEach(function (tuning) {
-      $('.dropdown-menu').append(`<button class="dropdown-item drop-tuning" type="button">${tuning.title}</button>`)
+      $('.selector').append(`<button class="dropdown-item drop-tuning" type="button">${tuning.title}</button>`)
     })
   }
   store.currentTuning = null
@@ -145,16 +147,29 @@ const loadCurrentTuning = function () {
       notes.push(value)
     }
   }
-
+  //console.log(firstNotes)
   $('.fret').each(function () {
     frets.push(this.id)
   })
   const tunerNotes = notesToolBox.getTunerNote(firstNotes)
+  //console.log(tunerNotes)
   $('.tuner').each(function (tuner) {
-    $('#' + this.id).val(tunerNotes[this.id.slice(6)]).trigger('change')
+    //console.log(this.id)
+    $('#' + this.id).text(tunerNotes[this.id.slice(6)])
   })
   notes = [].concat.apply([], notes)
+  //console.log(notes)
   changeStringNotes(notes, frets)
+}
+
+const saveNotAllowedNoInput = function () {
+  $('#state-message').fadeIn().html('<h4>Please enter a title to save the tuning!</h4>')
+  setTimeout(function () { $('#state-message').fadeOut('slow') }, 500)
+}
+
+const deleteNotAllowedNoInput = function () {
+  $('#state-message').fadeIn().html('<h4>In order to delete a tuning it must first be saved, and the title of the tuning must be in the title box</h4>')
+  setTimeout(function () { $('#state-message').fadeOut('slow') }, 2000)
 }
 
 module.exports = {
@@ -172,5 +187,7 @@ module.exports = {
   onPasswordChangeShow,
   inputNotAllowed,
   fillTuningsDropDown,
-  loadCurrentTuning
+  loadCurrentTuning,
+  saveNotAllowedNoInput,
+  deleteNotAllowedNoInput
 }

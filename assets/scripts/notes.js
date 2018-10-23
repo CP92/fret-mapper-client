@@ -6,7 +6,8 @@ const musicNotes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', '
 
 const noteLayout = function (notes, tuners) {
   const collection = []
-
+  //console.log(notes)
+  //console.log(tuners)
   notes.forEach(function (note, index) {
     const outNotes = musicNotes.map(x => x)
 

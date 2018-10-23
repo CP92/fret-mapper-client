@@ -11,7 +11,7 @@ const ui = require('./ui')
 
 $(() => {
   $(window).on('load', events.onLoad)
-  $('.tuner').change(events.onTunerChange)
+  $('.tuner-drop').on('click', 'button', events.onTunerChange)
   $('#sign-up-form').on('submit', events.onSignUpCreds)
   $('#sign-in-form').on('submit', events.onLoginCreds)
   $('#sign-out').on('click', events.onLogOut)
@@ -21,5 +21,5 @@ $(() => {
   $('#sign-up-button').on('click', ui.showSignUpForm)
   $('#save').on('click', events.onSaveTuning)
   $('#delete').on('click', events.onDeleteTuning)
-  $('.dropdown-menu').on('click', 'button', events.onGetUserTuning)
+  $('.selector').on('click', 'button', events.onGetUserTuning)
 })
