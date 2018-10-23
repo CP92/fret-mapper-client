@@ -4,7 +4,6 @@ const config = require('./config')
 const store = require('./store')
 
 const sendSignUpCreds = function (data) {
-  // console.log(data)
   return $.ajax({
     url: config.apiUrl + '/sign-up',
     method: 'POST',
@@ -13,7 +12,6 @@ const sendSignUpCreds = function (data) {
 }
 
 const sendLoginCreds = function (data) {
-  // console.log(data)
   return $.ajax({
     url: config.apiUrl + '/sign-in',
     method: 'POST',
@@ -33,7 +31,6 @@ const sendPassChange = function (data) {
 }
 
 const sendLogOut = function () {
-  // console.log(store)
   return $.ajax({
     url: config.apiUrl + '/sign-out',
     headers: {

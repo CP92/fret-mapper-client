@@ -6,6 +6,7 @@ const getFormFields = require('../../lib/get-form-fields')
 const notesToolBox = require('./notes.js')
 const store = require('./store')
 
+// Changes the single line when a tuner is changed
 const onTunerChange = function (event) {
   event.preventDefault()
   const note = [$(event.target).val()]
@@ -17,6 +18,7 @@ const onTunerChange = function (event) {
   ui.changeStringNotes(newStringTuning, frets)
 }
 
+// Loads the tuning for the guitar. At the current version this is standard E at all times
 const onLoad = function (event) {
   event.preventDefault()
   const frets = []
@@ -25,9 +27,7 @@ const onLoad = function (event) {
   $('.tuner').each(function () { tuners.push('#' + this.id) })
   $('.tuner').each(function () { tunerNotes.push($('#' + this.id).val()) })
   $('.fret').each(function () { frets.push(this.id) })
-  // console.log(tuners)
   tunerNotes = notesToolBox.noteLayout(tunerNotes, tuners)
-  // console.log(tunerNotes)
   tunerNotes = [].concat.apply([], tunerNotes)
   ui.changeStringNotes(tunerNotes, frets)
   store.currentTuning = {}
@@ -43,10 +43,7 @@ const onSignUpCreds = function (event) {
 
 const onLoginCreds = function (event) {
   event.preventDefault()
-
-  // console.log(store.token)
   const credData = getFormFields(event.target)
-
   api.sendLoginCreds(credData)
     .then(ui.loginSuccess)
     .then(api.sendGetUserTunings)
@@ -57,44 +54,35 @@ const onLoginCreds = function (event) {
 const onPasswordChange = function (event) {
   event.preventDefault()
   const passData = getFormFields(event.target)
-  // console.log(passData)
   api.sendPassChange(passData)
     .then(ui.passChangeSuccess)
     .catch(ui.wrongPassChange)
 }
 
 const onLogOut = function (event) {
-  // console.log(event)
   event.preventDefault()
   api.sendLogOut()
     .then(ui.logOutSuccess)
     .catch(ui.error)
 }
 
-const onDeleteTuning = function () {
+// allows the user to delete a existing tuning
+const onDeleteTuning = function (event) {
   event.preventDefault()
   if (store.token) {
     const title = $('#tuning-title').val()
+
     store.tuneHash['title'] = title
-    // console.log(store.tuneHash)
-    // console.log(store.token)
     const data = {
       'tuning': {'title': store.tuneHash['title']}
     }
-
-    // notesToolBox.setCurrentTuning()
-    // console.log(store.tuneHash)
     for (const [key, value] of Object.entries(store.tuneHash)) {
       if (key === 'title') {
-        // console.log('skipped')
       } else {
         data.tuning[key] = value
       }
     }
-    // console.log(data)
-    //console.log(data)
     store.currentTuning = notesToolBox.searchSavedTunings(data.tuning.title)
-    //console.log(store.currentTuning)
     api.sendDeleteExistingTuning()
       .then(api.sendGetUserTunings)
       .then(ui.fillTuningsDropDown)
@@ -108,25 +96,16 @@ const onSaveTuning = function (event) {
   if (store.token) {
     const title = $('#tuning-title').val()
     store.tuneHash['title'] = title
-    // console.log(store.tuneHash)
-    // console.log(store.token)
     const data = {
       'tuning': {'title': store.tuneHash['title']}
     }
-
-    // notesToolBox.setCurrentTuning()
-    // console.log(store.tuneHash)
     for (const [key, value] of Object.entries(store.tuneHash)) {
       if (key === 'title') {
-        // console.log('skipped')
       } else {
         data.tuning[key] = value
       }
     }
-    // console.log(data)
-    //console.log(data)
     store.currentTuning = notesToolBox.searchSavedTunings(data.tuning.title)
-    console.log(store.currentTuning)
     if ((!jQuery.isEmptyObject(store.currentTuning))) {
       api.sendUpdateExistingTuning(data)
         .then(api.sendGetUserTunings)
@@ -144,13 +123,9 @@ const onSaveTuning = function (event) {
 
 const onGetUserTuning = function (event) {
   event.preventDefault()
-  //console.log("clicked")
-  // console.log($(event.target).val())
   const tuningName = $(event.target).text()
-  //console.log(tuningName)
   $('#tuning-selector').text(tuningName)
   store.currentTuning = notesToolBox.searchSavedTunings(tuningName)
-  // console.log(store.currentTuning)
   ui.loadCurrentTuning()
 }
 

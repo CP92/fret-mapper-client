@@ -11,12 +11,8 @@ const noteLayout = function (notes, tuners) {
     const outNotes = musicNotes.map(x => x)
 
     if (outNotes.indexOf(note) === 0) {
-      // console.log(outNotes)
       outNotes.shift()
-      // const curCol = outNotes
-
       containsTuner(tuners[index])
-      // store.tuneHash[`string${index}`] = curCol
       collection.push(outNotes)
     } else {
       const last = outNotes.slice(0, outNotes.indexOf(note) + 1)
@@ -26,23 +22,15 @@ const noteLayout = function (notes, tuners) {
       last.forEach(function (x) {
         outNotes.push(x)
       })
-      // const colKey = outNotes.pop()
-      // console.log(colKey)
-      // const curCol = outNotes
       outNotes.pop()
       collection.push(outNotes)
-      // console.log(collection)
-      // console.log(curCol)
       containsTuner(tuners[index])
-      // store.tuneHash[`string${index}`] = curCol
     }
   })
 
-  // console.log(collection)
   collection.forEach(function (col, index) {
     store.tuneHash[`string${index}`] = col
   })
-  // console.log(store.tuneHash)
   return collection
 }
 
@@ -53,12 +41,8 @@ const oneNoteLayout = function (notes, tuners) {
     const outNotes = musicNotes.map(x => x)
 
     if (outNotes.indexOf(note) === 0) {
-      // console.log(outNotes)
       outNotes.shift()
-      // const curCol = outNotes
-
       containsTuner(tuners[index])
-      // store.tuneHash[`string${index}`] = curCol
       collection.push(outNotes)
     } else {
       const last = outNotes.slice(0, outNotes.indexOf(note) + 1)
@@ -68,24 +52,15 @@ const oneNoteLayout = function (notes, tuners) {
       last.forEach(function (x) {
         outNotes.push(x)
       })
-      // const colKey = outNotes.pop()
-      // console.log(colKey)
-      // const curCol = outNotes
       outNotes.pop()
       collection.push(outNotes)
-      // console.log(collection)
-      // console.log(curCol)
       containsTuner(tuners[index])
-      // store.tuneHash[`string${index}`] = curCol
     }
   })
 
-  // console.log(collection)
-  // console.log(tuners[0].slice(7))
   collection.forEach(function (col, index) {
     store.tuneHash[`string${tuners[0].slice(7)}`] = col
   })
-  // console.log(store.tuneHash)
   return collection
 }
 
@@ -98,23 +73,15 @@ const containsTuner = function (tuner) {
 }
 
 const setCurrentTuning = function () {
-  // console.log(store.currentTuning)
   store.currentTuning['title'] = $('#tuning-title').val()
-  // console.log(store.currentTuning.title)
   $('.fret').each(function (fret) {
     const fretId = this.id.slice(5, 6)
-    // console.log(fretId)
     store.currentTuning[`string${fretId}`].push($('#' + this.id).text())
   })
-
-  // console.log(store.currentTuning)
 }
 
 const searchSavedTunings = function (tuningName) {
-  console.log(store.tunings)
-  console.log(tuningName)
   let tuning = {}
-  console.log(tuning)
   if (typeof store.tunings === 'undefined') {
     return tuning
   } else {
@@ -125,16 +92,13 @@ const searchSavedTunings = function (tuningName) {
   if (typeof tuning === 'undefined') {
     tuning = {}
   }
-  console.log(tuning)
   return tuning
 }
 
 const getTunerNote = function (notes) {
-  // console.log(notes)
   const tunerNotes = notes.map(function (note) {
     return musicNotes[musicNotes.indexOf(note) - 1]
   })
-  // console.log(tunerNotes)
   return tunerNotes
 }
 

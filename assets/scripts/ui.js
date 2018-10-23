@@ -6,7 +6,6 @@ const notesToolBox = require('./notes')
 const changeStringNotes = function (notes, frets) {
   frets.forEach(function (fret, index) {
     $(`#${fret}`).text(notes[index])
-    // console.log(notes[index] + ` added to #${fret}`)
   })
 }
 
@@ -17,7 +16,6 @@ const changeOnLoad = function (noteGroups, frets) {
 }
 
 const signUpError = function () {
-  // console.log(error)
   $('#sign-up-message').html("<h4>The email you have entered already exists, or your passwords don't match. Please try again</h4>")
   setTimeout(function () { $('#sign-up-message').fadeOut('slow') }, 500)
   $('#sign-up-form').trigger('reset')
@@ -40,11 +38,8 @@ const signUpSuccess = function () {
 const loginSuccess = function (response) {
   $('#sign-in-message').fadeIn().html('<h4>Login successful!</h4>')
   setTimeout(function () { $('#sign-in-message').fadeOut('slow') }, 500)
-  // console.log(response)
-  // console.log(response.user.token)
   const token = response.user.token
   store.token = token
-  // console.log(store.token)
   $('#sign-out').removeClass('hidden')
   $('#change-password').removeClass('hidden')
   $('#sign-in-form').addClass('hidden')
@@ -101,8 +96,6 @@ const showSignUpForm = function () {
 
 //  Shows the player they are logged out
 const logOutSuccess = function (response) {
-  // store.token = null
-  //console.log(store)
   $('#logout-message').fadeIn().html('<h4>Logout successful!</h4>')
   setTimeout(function () { $('#logout-message').fadeOut('slow') }, 500)
   $('#sign-out').addClass('hidden')
@@ -129,14 +122,12 @@ const inputNotAllowed = function () {
 
 const fillTuningsDropDown = function (response) {
   store.tunings = response.tunings
-  console.log(store.tunings)
   if (jQuery.isEmptyObject(store.tunings)) {
     $('#tuning-selector').text('Select Tuning')
   } else {
     $('#tuning-selector').text('Select Tuning')
     $('.dropdown-menu').html('')
     store.tunings.forEach(function (tuning) {
-      console.log('adding' + tuning.title)
       $('.dropdown-menu').append(`<button class="dropdown-item drop-tuning" type="button">${tuning.title}</button>`)
     })
   }
@@ -144,14 +135,12 @@ const fillTuningsDropDown = function (response) {
 }
 
 const loadCurrentTuning = function () {
-  console.log(store.currentTuning)
   const firstNotes = []
   let notes = []
   const frets = []
   $('#tuning-title').val(store.currentTuning.title)
   for (const [key, value] of Object.entries(store.currentTuning)) {
     if (key.includes('string')) {
-      //console.log(key)
       firstNotes.push(value[0])
       notes.push(value)
     }
@@ -159,24 +148,12 @@ const loadCurrentTuning = function () {
 
   $('.fret').each(function () {
     frets.push(this.id)
-    // console.log(stringNum)
   })
-  //console.log(firstNotes)
-  // const afterTunerNotes = []
-  /*  notes.forEach(function (noteArray) {
-    afterTunerNotes.push(noteArray[0])
-    console.log('added' + noteArray)
-  }) */
-  // console.log(afterTunerNotes)
   const tunerNotes = notesToolBox.getTunerNote(firstNotes)
-  // console.log(tunerNotes)
   $('.tuner').each(function (tuner) {
-    // console.log(tunerNotes[this.id.slice(6)])
     $('#' + this.id).val(tunerNotes[this.id.slice(6)]).trigger('change')
-    // console.log($('#' + this.id).val())
   })
   notes = [].concat.apply([], notes)
-  //console.log(tunerNotes)
   changeStringNotes(notes, frets)
 }
 
