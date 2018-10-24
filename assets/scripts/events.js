@@ -84,6 +84,7 @@ const onDeleteTuning = function (event) {
   let title = $('#tuning-title').val()
   title = title.replace(/[^\w\s]/gi, '')
   store.currentTuning = notesToolBox.searchSavedTunings(title)
+
   //console.log(title)
   if (store.token && title !== '') {
     store.tuneHash['title'] = title
@@ -96,9 +97,15 @@ const onDeleteTuning = function (event) {
         data.tuning[key] = value
       }
     }
+
+    if (!(notesToolBox.isEmpty(store.currentTuning))) {
     api.sendDeleteExistingTuning()
       .then(api.sendGetUserTunings)
       .then(ui.fillTuningsDropDown)
+      .catch(ui.error)
+    } else {
+      ui.noSavedTuning()
+    }
     } else if (!store.token) {
       ui.inputNotAllowed()
     } else if (title === '') {
@@ -122,20 +129,21 @@ const onSaveTuning = function (event) {
         data.tuning[key] = value
       }
     }
-    if ((!jQuery.isEmptyObject(store.currentTuning))) {
+    if (!(notesToolBox.isEmpty(store.currentTuning))) {
       api.sendUpdateExistingTuning(data)
-        .then(api.sendGetUserTunings)
-        .then(ui.fillTuningsDropDown)
+          .then(api.sendGetUserTunings)
+          .then(ui.fillTuningsDropDown)
+          .catch(ui.error)
     } else {
       api.sendNewTuning(data)
         .then(api.sendGetUserTunings)
         .then(ui.fillTuningsDropDown)
-        .catch()
+        .catch(ui.error)
     }
   } else if (!store.token) {
     ui.inputNotAllowed()
   } else if (title === '') {
-  ui.saveNotAllowedNoInput()
+    ui.saveNotAllowedNoInput()
 }
 }
 
@@ -143,9 +151,7 @@ const onGetUserTuning = function (event) {
   event.preventDefault()
   const tuningName = $(event.target).text()
   $('#tuning-selector').text(tuningName)
-  //console.log(tuningName)
   store.currentTuning = notesToolBox.searchSavedTunings(tuningName)
-  //console.log(store.currentTuning)
   ui.loadCurrentTuning()
 }
 

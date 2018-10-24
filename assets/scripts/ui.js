@@ -122,7 +122,6 @@ const inputNotAllowed = function () {
 
 const fillTuningsDropDown = function (response) {
   store.tunings = response.tunings
-  //console.log(store.tunings)
   if (store.tunings.length === 0) {
     $('#tuning-selector').text('Select Tuning')
     $('.selector').html('')
@@ -133,7 +132,7 @@ const fillTuningsDropDown = function (response) {
       $('.selector').append(`<button class="dropdown-item drop-tuning" type="button">${tuning.title}</button>`)
     })
   }
-  store.currentTuning = null
+  store.currentTuning = store.tuneHash
 }
 
 const loadCurrentTuning = function () {
@@ -147,14 +146,11 @@ const loadCurrentTuning = function () {
       notes.push(value)
     }
   }
-  //console.log(firstNotes)
   $('.fret').each(function () {
     frets.push(this.id)
   })
   const tunerNotes = notesToolBox.getTunerNote(firstNotes)
-  //console.log(tunerNotes)
   $('.tuner').each(function (tuner) {
-    //console.log(this.id)
     $('#' + this.id).text(tunerNotes[this.id.slice(6)])
   })
   notes = [].concat.apply([], notes)
@@ -169,6 +165,11 @@ const saveNotAllowedNoInput = function () {
 
 const deleteNotAllowedNoInput = function () {
   $('#state-message').fadeIn().html('<h4>In order to delete a tuning it must first be saved, and the title of the tuning must be in the title box</h4>')
+  setTimeout(function () { $('#state-message').fadeOut('slow') }, 2000)
+}
+
+const noSavedTuning = function () {
+  $('#state-message').fadeIn().html('<h4>No saved tuning to delete with that name!</h4>')
   setTimeout(function () { $('#state-message').fadeOut('slow') }, 2000)
 }
 
@@ -189,5 +190,6 @@ module.exports = {
   fillTuningsDropDown,
   loadCurrentTuning,
   saveNotAllowedNoInput,
-  deleteNotAllowedNoInput
+  deleteNotAllowedNoInput,
+  noSavedTuning
 }

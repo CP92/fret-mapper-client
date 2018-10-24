@@ -6,8 +6,6 @@ const musicNotes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', '
 
 const noteLayout = function (notes, tuners) {
   const collection = []
-  //console.log(notes)
-  //console.log(tuners)
   notes.forEach(function (note, index) {
     const outNotes = musicNotes.map(x => x)
 
@@ -28,7 +26,6 @@ const noteLayout = function (notes, tuners) {
       containsTuner(tuners[index])
     }
   })
-
   collection.forEach(function (col, index) {
     store.tuneHash[`string${index}`] = col
   })
@@ -58,7 +55,6 @@ const oneNoteLayout = function (notes, tuners) {
       containsTuner(tuners[index])
     }
   })
-
   collection.forEach(function (col, index) {
     store.tuneHash[`string${tuners[0].slice(7)}`] = col
   })
@@ -98,9 +94,20 @@ const searchSavedTunings = function (tuningName) {
 
 const getTunerNote = function (notes) {
   const tunerNotes = notes.map(function (note) {
-    return musicNotes[musicNotes.indexOf(note) - 1]
+    if (note === 'A') {
+      return musicNotes[11]
+    } else {
+      return musicNotes[musicNotes.indexOf(note) - 1]
+    }
   })
   return tunerNotes
+}
+
+function isEmpty (obj) {
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) { return false }
+  }
+  return true
 }
 
 module.exports = {
@@ -108,5 +115,6 @@ module.exports = {
   searchSavedTunings,
   getTunerNote,
   setCurrentTuning,
-  oneNoteLayout
+  oneNoteLayout,
+  isEmpty
 }
