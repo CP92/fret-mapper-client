@@ -34,7 +34,6 @@
         <button id='sign-up-button' type="button" class="btn btn-warning navbar-btn">SIGN UP</button>
         <button id="change-password" class="hidden btn btn-info navbar-btn">Change password</button>
         <button id="sign-out" class="hidden btn btn-danger navbar-btn">Sign out</button>
-
       </li>
       <li class="nav-item active">
         <div id="logout-message" class="hidden log-out-group"></div>
@@ -125,6 +124,7 @@
 
       <div class="container">
         <div class="row" id="row-0">
+
 <!--
 <div class="dropdown hidden" id="tuning-selector-div">
   <button class="btn-sm btn-secondary dropdown-toggle border border-light" type="button" id="tuning-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -182,7 +182,8 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-8">0-8</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-9">0-9</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-10">0-10</div>
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-11">0-11</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-0-11">0-11</div>
+
         </div>
         <div class="row" id="row-1">
 <!--
@@ -208,7 +209,7 @@
 -->
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-1 text-center dropdown"  id="tuner">
 
-              <button class="btn-sm btn-warning dropdown-toggle border border-light tuner" type="button" id="tuner-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 B
               </button>
               <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-1">
@@ -253,12 +254,12 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-8">1-8</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-9">1-9</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-10">1-10</div>
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-11">1-11</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-1-11">1-11</div>
         </div>
         <div class="row" id="row-2">
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-2 text-center dropdown"  id="tuner">
 
-              <button class="btn-sm btn-warning dropdown-toggle border border-light tuner" type="button" id="tuner-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 G
               </button>
               <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-2">
@@ -304,12 +305,12 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-8">2-8</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-9">2-9</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-10">2-10</div>
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-11">2-11</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-2-11">2-11</div>
         </div>
         <div class="row" id="row-3">
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-3 text-center dropdown"  id="tuner">
 
-              <button class="btn-sm btn-warning dropdown-toggle border border-light tuner" type="button" id="tuner-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 D
               </button>
               <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-3">
@@ -354,12 +355,12 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-8">3-8</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-9">3-9</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-10">3-10</div>
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-11">3-11</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-3-11">3-11</div>
         </div>
         <div class="row" id="row-4">
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-4 text-center dropdown"  id="tuner">
 
-              <button class="btn-sm btn-warning dropdown-toggle border border-light tuner" type="button" id="tuner-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 A
               </button>
               <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-4">
@@ -404,12 +405,12 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-8">4-8</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-9">4-9</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-10">4-10</div>
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-11">4-11</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-4-11">4-11</div>
         </div>
         <div class="row" id="row-5">
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-5 text-center dropdown"  id="tuner">
 
-              <button class="btn-sm btn-warning dropdown-toggle border border-light tuner" type="button" id="tuner-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 E
               </button>
               <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-5">
@@ -454,7 +455,7 @@
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-8">5-8</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-9">5-9</div>
           <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-10">5-10</div>
-          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-11">5-11</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-5-11">5-11</div>
         </div>
 
       </div>

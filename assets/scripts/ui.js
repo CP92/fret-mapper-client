@@ -173,6 +173,16 @@ const noSavedTuning = function () {
   setTimeout(function () { $('#state-message').fadeOut('slow') }, 2000)
 }
 
+const saveTuningSuccess = function () {
+  $('#state-message').fadeIn().html('<h4>Tuning saved!</h4>')
+  setTimeout(function () { $('#state-message').fadeOut('slow') }, 2000)
+}
+
+const deleteTuningSuccess = function () {
+  $('#state-message').fadeIn().html('<h4>Tuning deleted!</h4>')
+  setTimeout(function () { $('#state-message').fadeOut('slow') }, 2000)
+}
+
 module.exports = {
   changeStringNotes,
   changeOnLoad,
@@ -191,5 +201,7 @@ module.exports = {
   loadCurrentTuning,
   saveNotAllowedNoInput,
   deleteNotAllowedNoInput,
-  noSavedTuning
+  noSavedTuning,
+  saveTuningSuccess,
+  deleteTuningSuccess
 }

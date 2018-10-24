@@ -102,6 +102,7 @@ const onDeleteTuning = function (event) {
     api.sendDeleteExistingTuning()
       .then(api.sendGetUserTunings)
       .then(ui.fillTuningsDropDown)
+      .then(ui.deleteTuningSuccess)
       .catch(ui.error)
     } else {
       ui.noSavedTuning()
@@ -133,11 +134,13 @@ const onSaveTuning = function (event) {
       api.sendUpdateExistingTuning(data)
           .then(api.sendGetUserTunings)
           .then(ui.fillTuningsDropDown)
+          .then(ui.saveTuningSuccess)
           .catch(ui.error)
     } else {
       api.sendNewTuning(data)
         .then(api.sendGetUserTunings)
         .then(ui.fillTuningsDropDown)
+        .then(ui.saveTuningSuccess)
         .catch(ui.error)
     }
   } else if (!store.token) {
