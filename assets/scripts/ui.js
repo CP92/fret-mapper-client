@@ -109,6 +109,7 @@ const logOutSuccess = function (response) {
   $('#state-message').html('')
   $('#sign-in-message').html('')
   $('#tuning-selector-div').addClass('hidden')
+  $('#tuning-title').val('')
   store.token = null
   store.tunings = {}
   store.currentTuning = {}
@@ -154,7 +155,6 @@ const loadCurrentTuning = function () {
     $('#' + this.id).text(tunerNotes[this.id.slice(6)])
   })
   notes = [].concat.apply([], notes)
-  //console.log(notes)
   changeStringNotes(notes, frets)
 }
 
@@ -183,6 +183,51 @@ const deleteTuningSuccess = function () {
   setTimeout(function () { $('#state-message').fadeOut('slow') }, 2000)
 }
 
+const addString = function (lastString) {
+  $(`#row-${lastString}`).removeClass('last-row')
+  $('.container').append(`<div class="row last-row" id="row-${lastString + 1}">
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-${lastString + 1} text-center dropdown"  id="tuner">
+
+        <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-${lastString + 1}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          ${notesToolBox.getFourth($(`#tuner-${lastString}`).text())}
+        </button>
+        <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-${lastString + 1}">
+          <button class="dropdown-item drop-tuning" type="button">A</button>
+          <button class="dropdown-item drop-tuning" type="button">A#</button>
+          <button class="dropdown-item drop-tuning" type="button">B</button>
+          <button class="dropdown-item drop-tuning" type="button">C</button>
+          <button class="dropdown-item drop-tuning" type="button">C#</button>
+          <button class="dropdown-item drop-tuning" type="button">D</button>
+          <button class="dropdown-item drop-tuning" type="button">D#</button>
+          <button class="dropdown-item drop-tuning" type="button">E</button>
+          <button class="dropdown-item drop-tuning" type="button">F</button>
+          <button class="dropdown-item drop-tuning" type="button">F#</button>
+          <button class="dropdown-item drop-tuning" type="button">G</button>
+          <button class="dropdown-item drop-tuning" type="button">G#</button>
+        </div>
+
+    </div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-1">${lastString + 1}-1</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-2">${lastString + 1}-2</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-3">${lastString + 1}-3</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-4">${lastString + 1}-4</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-5">${lastString + 1}-5</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-6">${lastString + 1}-6</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-7">${lastString + 1}-7</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-8">${lastString + 1}-8</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-9">${lastString + 1}-9</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-${lastString + 1}-10">${lastString + 1}-10</div>
+    <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-${lastString + 1}-11">${lastString + 1}-11</div>
+  </div>`)
+
+}
+
+const removeString = function (lastString) {
+  $('.container').children().last().remove()
+  console.log(lastString)
+  $(`#row-${lastString - 1}`).addClass('last-row')
+}
+
 module.exports = {
   changeStringNotes,
   changeOnLoad,
@@ -203,5 +248,7 @@ module.exports = {
   deleteNotAllowedNoInput,
   noSavedTuning,
   saveTuningSuccess,
-  deleteTuningSuccess
+  deleteTuningSuccess,
+  addString,
+  removeString
 }

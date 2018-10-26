@@ -3,6 +3,7 @@
 const store = require('./store.js')
 
 const musicNotes = ['A', 'A#', 'B', 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#']
+const defaultTuning = ['E', 'B', 'G', 'D', 'A', 'E']
 
 const noteLayout = function (notes, tuners) {
   const collection = []
@@ -110,11 +111,26 @@ function isEmpty (obj) {
   return true
 }
 
+const getFourth = function (note) {
+  note = note.replace(/\s/g, '')
+  console.log(note)
+  if (musicNotes.indexOf(note) - 5 < 0) {
+    return musicNotes[((musicNotes.indexOf(note) - 5) + 12)]
+  } else {
+    return musicNotes[musicNotes.indexOf(note) - 5]
+}
+
+}
+
+
+
 module.exports = {
   noteLayout,
   searchSavedTunings,
   getTunerNote,
   setCurrentTuning,
   oneNoteLayout,
-  isEmpty
+  isEmpty,
+  defaultTuning,
+  getFourth
 }

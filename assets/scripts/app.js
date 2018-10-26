@@ -22,4 +22,6 @@ $(() => {
   $('#save').on('click', events.onSaveTuning)
   $('#delete').on('click', events.onDeleteTuning)
   $('.selector').on('click', 'button', events.onGetUserTuning)
+  $('#add-string').on('click', events.onGetLastString)
+  $('#remove-string').on('click', events.onGetLastString)
 })
