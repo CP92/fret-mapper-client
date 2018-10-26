@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Example</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+    <body>
+      <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+  <a class="navbar-brand" href="#">Fret Mapper</a>
+  <div class="dropdown hidden" id="tuning-selector-div">
+    <button class="btn-sm btn-secondary dropdown-toggle border border-light" type="button" id="tuning-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Select Tuning
+    </button>
+    <div class="dropdown-menu selector" aria-labelledby="tuning-selector">
+
+    </div>
+  </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <button id='sign-in-button' class="btn btn-success navbar-btn">LOG IN</button>
+        <button id='sign-up-button' type="button" class="btn btn-warning navbar-btn">SIGN UP</button>
+        <button id="change-password" class="hidden btn btn-info navbar-btn">Change password</button>
+        <button id="sign-out" class="hidden btn btn-danger navbar-btn">Sign out</button>
+      </li>
+      <li class="nav-item active">
+        <div id="logout-message" class="hidden log-out-group"></div>
+        <div id="sign-up-message" class="sign-up-group"></div>
+        <form id="sign-up-form" class="hidden sign-up-group  form-inline my-2 my-lg-0">
+          <legend>Please enter your information to sign up!</legend>
+          <input id="sign-up-email" required name="credentials[email]" type="email" placeholder="Email"/>
+          <input id="sign-up-password" required name="credentials[password]" type="password" placeholder="Password"/>
+          <input id="sign-up-passwordconfirm" required name="credentials[password_confirmation]" type="password" placeholder="Retype password"/>
+          <input type="submit" value="Submit" class="btn btn-default"/>
+        </form>
+        <div id="sign-in-message" class="sign-in-group hidden"></div>
+        <form id="sign-in-form" class=" form-inline my-2 my-lg-0 hidden sign-in-group">
+          <legend>Please enter your login details</legend>
+          <input id="sign-in-email" required name="credentials[email]" type="email" placeholder="Email"/>
+          <input id="sign-in-password" required name="credentials[password]" type="password" placeholder="Password"/>
+          <input type="submit" value="Submit" class="btn btn-default"/>
+        </form>
+        <form id="change-password-form" class="hidden sign-up-group form-inline my-2 my-lg-0">
+          <legend>Please enter your information to sign up!</legend>
+          <input required name="passwords[old]" type="password" placeholder="Current password"/>
+          <input required name="passwords[new]" type="password" placeholder="New Password"/>
+          <input type="submit" value="Submit" class="btn btn-default"/>
+        </form>
+      </li>
+      <li class="nav-item active">
+        <form class="form-inline my-2 my-lg-0">
+        <a class="nav-link hidden" id="sign-out" href="#">Sign Out<span class="sr-only">(current)</span></a>
+      </form>
+    </li>
+    <li class="nav-item active">
+      <form class="form-inline my-2 my-lg-0">
+        <a class="nav-link hidden" id="change-password" href="#">Change Password<span class="sr-only">(current)</span></a>
+      </form>
+    </li>
+        </ul>
+  </div>
+  <div id="state-message" class="hidden state"></div>
+</nav>
+
+<!--
+      <div class="buttons-and-fields">
+
+        <button id="sign-out" class="hidden btn-lg btn-danger">Sign out</button>
+        <div id="logout-message" class="hidden log-out-group"></div>
+      <button id="change-password" class="hidden btn-lg btn-info">Change password</button>
+      <form id="change-password-form" class="hidden sign-up-group">
+      <legend>Please enter your information to sign up!</legend>
+      <input required name="passwords[old]" type="password" placeholder="Current password"/>
+      <input required name="passwords[new]" type="password" placeholder="New Password"/>
+      <input type="submit" value="Submit" class="btn btn-default"/>
+    </form>
+      <button id='sign-in-button' type="button" class="btn-lg btn-success">LOG IN</button>
+      <div id="sign-in-message" class="sign-in-group hidden"></div>
+      <form id="sign-in-form" class="hidden sign-in-group">
+        <legend>Please enter your login details</legend>
+        <input id="sign-in-email" required name="credentials[email]" type="email" placeholder="Email"/>
+        <input id="sign-in-password" required name="credentials[password]" type="password" placeholder="Password"/>
+        <input type="submit" value="Submit" class="btn btn-default"/>
+      </form>
+      <button id='sign-up-button' type="button" class="btn-lg btn-warning">SIGN UP</button>
+      <div id="sign-up-message" class="sign-up-group"></div>
+      <form id="sign-up-form" class="hidden sign-up-group">
+      <legend>Please enter your information to sign up!</legend>
+      <input id="sign-up-email" required name="credentials[email]" type="email" placeholder="Email"/>
+      <input id="sign-up-password" required name="credentials[password]" type="password" placeholder="Password"/>
+      <input id="sign-up-passwordconfirm" required name="credentials[password_confirmation]" type="password" placeholder="Retype password"/>
+      <input type="submit" value="Submit" class="btn btn-default"/>
+    </form>
+  </div>
+-->
+
+<!--
+    <select id="tuning-selector">
+      <option value="" disabled selected>Select tuning</option>
+
+    </select>
+-->
+    <div class="input-group mb-3" id="tuning-title-container">
+      <div class="input-group-prepend">
+        <button id="delete" class="btn btn-outline-danger" type="button">Delete saved tuning!</button>
+      </div>
+  <input id="tuning-title" type="text" class="form-control" placeholder="Enter tuning title to save or delete" aria-label="Tuning title" aria-describedby="basic-addon2">
+  <div class="input-group-append">
+    <button id="save" class="btn btn-outline-primary" type="button">Save!</button>
+  </div>
+</div>
+
+      <div class="container">
+        <div class="row" id="row-0">
+
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-0 text-center dropdown"  id="tuner">
+
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                E
+              </button>
+              <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-0">
+                <button class="dropdown-item drop-tuning" type="button">A</button>
+                <button class="dropdown-item drop-tuning" type="button">A#</button>
+                <button class="dropdown-item drop-tuning" type="button">B</button>
+                <button class="dropdown-item drop-tuning" type="button">C</button>
+                <button class="dropdown-item drop-tuning" type="button">C#</button>
+                <button class="dropdown-item drop-tuning" type="button">D</button>
+                <button class="dropdown-item drop-tuning" type="button">D#</button>
+                <button class="dropdown-item drop-tuning" type="button">E</button>
+                <button class="dropdown-item drop-tuning" type="button">F</button>
+                <button class="dropdown-item drop-tuning" type="button">F#</button>
+                <button class="dropdown-item drop-tuning" type="button">G</button>
+                <button class="dropdown-item drop-tuning" type="button">G#</button>
+              </div>
+
+          </div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-1">0-1</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-2">0-2</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-3">0-3</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-4">0-4</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-5">0-5</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-6">0-6</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-7">0-7</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-8">0-8</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-9">0-9</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-0-10">0-10</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-0-11">0-11</div>
+
+        </div>
+        <div class="row" id="row-1">
+
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-1 text-center dropdown"  id="tuner">
+
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                B
+              </button>
+              <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-1">
+                <button class="dropdown-item drop-tuning" type="button">A</button>
+                <button class="dropdown-item drop-tuning" type="button">A#</button>
+                <button class="dropdown-item drop-tuning" type="button">B</button>
+                <button class="dropdown-item drop-tuning" type="button">C</button>
+                <button class="dropdown-item drop-tuning" type="button">C#</button>
+                <button class="dropdown-item drop-tuning" type="button">D</button>
+                <button class="dropdown-item drop-tuning" type="button">D#</button>
+                <button class="dropdown-item drop-tuning" type="button">E</button>
+                <button class="dropdown-item drop-tuning" type="button">F</button>
+                <button class="dropdown-item drop-tuning" type="button">F#</button>
+                <button class="dropdown-item drop-tuning" type="button">G</button>
+                <button class="dropdown-item drop-tuning" type="button">G#</button>
+              </div>
+
+        </div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-1">1-1</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-2">1-2</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-3">1-3</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-4">1-4</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-5">1-5</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-6">1-6</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-7">1-7</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-8">1-8</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-9">1-9</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-1-10">1-10</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-1-11">1-11</div>
+        </div>
+        <div class="row" id="row-2">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-2 text-center dropdown"  id="tuner">
+
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                G
+              </button>
+              <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-2">
+                <button class="dropdown-item drop-tuning" type="button">A</button>
+                <button class="dropdown-item drop-tuning" type="button">A#</button>
+                <button class="dropdown-item drop-tuning" type="button">B</button>
+                <button class="dropdown-item drop-tuning" type="button">C</button>
+                <button class="dropdown-item drop-tuning" type="button">C#</button>
+                <button class="dropdown-item drop-tuning" type="button">D</button>
+                <button class="dropdown-item drop-tuning" type="button">D#</button>
+                <button class="dropdown-item drop-tuning" type="button">E</button>
+                <button class="dropdown-item drop-tuning" type="button">F</button>
+                <button class="dropdown-item drop-tuning" type="button">F#</button>
+                <button class="dropdown-item drop-tuning" type="button">G</button>
+                <button class="dropdown-item drop-tuning" type="button">G#</button>
+              </div>
+
+          </div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-1">2-1</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-2">2-2</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-3">2-3</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-4">2-4</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-5">2-5</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-6">2-6</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-7">2-7</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-8">2-8</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-9">2-9</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-2-10">2-10</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-2-11">2-11</div>
+        </div>
+        <div class="row" id="row-3">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-3 text-center dropdown"  id="tuner">
+
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                D
+              </button>
+              <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-3">
+                <button class="dropdown-item drop-tuning" type="button">A</button>
+                <button class="dropdown-item drop-tuning" type="button">A#</button>
+                <button class="dropdown-item drop-tuning" type="button">B</button>
+                <button class="dropdown-item drop-tuning" type="button">C</button>
+                <button class="dropdown-item drop-tuning" type="button">C#</button>
+                <button class="dropdown-item drop-tuning" type="button">D</button>
+                <button class="dropdown-item drop-tuning" type="button">D#</button>
+                <button class="dropdown-item drop-tuning" type="button">E</button>
+                <button class="dropdown-item drop-tuning" type="button">F</button>
+                <button class="dropdown-item drop-tuning" type="button">F#</button>
+                <button class="dropdown-item drop-tuning" type="button">G</button>
+                <button class="dropdown-item drop-tuning" type="button">G#</button>
+              </div>
+
+          </div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-1">3-1</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-2">3-2</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-3">3-3</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-4">3-4</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-5">3-5</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-6">3-6</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-7">3-7</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-8">3-8</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-9">3-9</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-3-10">3-10</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-3-11">3-11</div>
+        </div>
+        <div class="row" id="row-4">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-4 text-center dropdown"  id="tuner">
+
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                A
+              </button>
+              <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-4">
+                <button class="dropdown-item drop-tuning" type="button">A</button>
+                <button class="dropdown-item drop-tuning" type="button">A#</button>
+                <button class="dropdown-item drop-tuning" type="button">B</button>
+                <button class="dropdown-item drop-tuning" type="button">C</button>
+                <button class="dropdown-item drop-tuning" type="button">C#</button>
+                <button class="dropdown-item drop-tuning" type="button">D</button>
+                <button class="dropdown-item drop-tuning" type="button">D#</button>
+                <button class="dropdown-item drop-tuning" type="button">E</button>
+                <button class="dropdown-item drop-tuning" type="button">F</button>
+                <button class="dropdown-item drop-tuning" type="button">F#</button>
+                <button class="dropdown-item drop-tuning" type="button">G</button>
+                <button class="dropdown-item drop-tuning" type="button">G#</button>
+              </div>
+
+          </div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-1">4-1</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-2">4-2</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-3">4-3</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-4">4-4</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-5">4-5</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-6">4-6</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-7">4-7</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-8">4-8</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-9">4-9</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-4-10">4-10</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret last-fret" id="fret-4-11">4-11</div>
+        </div>
+        <div class="row last-row" id="row-5">
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box tuner-5 text-center dropdown"  id="tuner">
+
+              <button class="btn-sm btn-warning dropdown-toggle tuner" type="button" id="tuner-5" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                E
+              </button>
+              <div class="dropdown-menu tuner-drop" aria-labelledby="tuner-5">
+                <button class="dropdown-item drop-tuning" type="button">A</button>
+                <button class="dropdown-item drop-tuning" type="button">A#</button>
+                <button class="dropdown-item drop-tuning" type="button">B</button>
+                <button class="dropdown-item drop-tuning" type="button">C</button>
+                <button class="dropdown-item drop-tuning" type="button">C#</button>
+                <button class="dropdown-item drop-tuning" type="button">D</button>
+                <button class="dropdown-item drop-tuning" type="button">D#</button>
+                <button class="dropdown-item drop-tuning" type="button">E</button>
+                <button class="dropdown-item drop-tuning" type="button">F</button>
+                <button class="dropdown-item drop-tuning" type="button">F#</button>
+                <button class="dropdown-item drop-tuning" type="button">G</button>
+                <button class="dropdown-item drop-tuning" type="button">G#</button>
+              </div>
+
+          </div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-1">5-1</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-2">5-2</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-3">5-3</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-4">5-4</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-5">5-5</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-6">5-6</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-7">5-7</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-8">5-8</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-9">5-9</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-10">5-10</div>
+          <div class="column col-xs-1 col-sm-1 col-md-1 col-lg-1 box text-center fret" id="fret-5-11">5-11</div>
+        </div>
+
+      </div>
+      <button type="button" class="btn btn-success btn-sm" id="add-string">
+        <span class="fas fa-plus-square" aria-hidden="true"></span>Add String
+      </button>
+      <button type="button" class="btn btn-danger btn-sm float-right" id="remove-string">
+        <span class="fas fa-minus-square" aria-hidden="true"></span>Remove String
+      </button>
+    </body>
+</html>
